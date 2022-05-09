@@ -1,16 +1,18 @@
 package edu.escuelaing.niubank.controller;
 
 import com.google.gson.Gson;
+import edu.escuelaing.niubank.services.UserServices;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.inject.Inject;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/perezputo")
-public class test {
+public class UserController {
     public Gson gson = new Gson();
+
+    @Inject
+    public UserServices userServices;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -18,4 +20,10 @@ public class test {
     public String hello() {
         return gson.toJson("Hello perez puto!!!");
     }
+
+    @POST
+    public String login(){
+        return "hello";
+    }
+
 }
