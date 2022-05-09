@@ -3,7 +3,7 @@ var index = (function (){
     return{
 
         conectar : function (){
-            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/hello-world").then(response => response.json()).then(json => alert(json))
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/perezputo").then(response => response.json()).then(json => alert(json))
 
 
         },

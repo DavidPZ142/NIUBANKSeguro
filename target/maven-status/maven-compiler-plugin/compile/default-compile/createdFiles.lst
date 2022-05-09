@@ -1,3 +1,5 @@
 edu\escuelaing\niubank\controller\test.class
+edu\escuelaing\niubank\repository\ControllerDb.class
 edu\escuelaing\niubank\controller\HelloResource.class
 edu\escuelaing\niubank\HelloApplication.class
+edu\escuelaing\niubank\repository\ConnectionDb.class
