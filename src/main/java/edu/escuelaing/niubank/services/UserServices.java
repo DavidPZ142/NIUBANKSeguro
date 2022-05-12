@@ -10,5 +10,7 @@ public interface UserServices {
 
     TokenDto Login(LoginDto loginDto);
     JSONObject verMonto (String cedula);
+    JSONObject verTransferencias();
+
 
 }

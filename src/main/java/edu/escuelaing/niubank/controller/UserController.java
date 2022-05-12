@@ -37,6 +37,12 @@ public class UserController {
         return gson.toJson(userServices.verMonto(cedula));
     }
 
+    @GET
+    @Path("/verTransferencia")
+    public String verTransferencia(){
+        return gson.toJson(userServices.verTransferencias());
+    }
+
 
 
 

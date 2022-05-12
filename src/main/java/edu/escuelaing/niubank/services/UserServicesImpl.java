@@ -26,6 +26,10 @@ public class UserServicesImpl implements UserServices{
         return  controllerDb.verMonto(cedula);
     }
 
+    @Override
+    public JSONObject verTransferencias() {
+        return controllerDb.verTransferencias();
+    }
 
 
 }

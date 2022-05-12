@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class ControllerDb implements ServicesDB{
+public class ControllerDb implements ServicesDB {
 
     ConnectionDb connectionDb;
     Connection connection;
@@ -28,7 +28,7 @@ public class ControllerDb implements ServicesDB{
     }
 
     @Override
-    public JSONObject verMonto(String cedula){
+    public JSONObject verMonto(String cedula) {
         JSONObject res = new JSONObject();
         String select = "SELECT nombre, fondos FROM usuario where usuario.cedula ='" + cedula + "';";
         try {
@@ -43,5 +43,26 @@ public class ControllerDb implements ServicesDB{
         return res;
     }
 
+    @Override
+    public JSONObject verTransferencias() {
+        JSONObject res = new JSONObject();
+        int key = 0;
+        String select = "SELECT * FROM transaccion ;";
+        try {
+            ResultSet resultSet = connection.prepareStatement(select).executeQuery();
+            while (resultSet.next()) {
+                JSONObject res2 = new JSONObject();
+                key += 1;
+                res2.put("numtransaccion ", resultSet.getString("numtransaccion"));
+                res2.put("cedulaemisor", resultSet.getString("cedulaemisor"));
+                res2.put("cedulareceptor", resultSet.getString("cedulareceptor"));
+                res2.put("cantidad", resultSet.getInt("cantidad"));
+                res.put(String.valueOf(key), res2);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return res;
+    }
 }

@@ -9,7 +9,7 @@ public interface ServicesDB {
 
     JSONObject verMonto(String cedula);
 
-    
+    JSONObject verTransferencias();
 
 
 }
