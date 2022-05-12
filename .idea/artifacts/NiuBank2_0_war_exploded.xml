@@ -1,14 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="NiuBank2.0:war exploded">
-    <output-path>$PROJECT_DIR$/target/NiuBank-1.0-SNAPSHOT</output-path>
-    <properties id="maven-jee-properties">
-      <options>
-        <exploded>true</exploded>
-        <module>NiuBank2.0</module>
-        <packaging>war</packaging>
-        <unpackNestedArchives>false</unpackNestedArchives>
-      </options>
-    </properties>
+    <output-path>$PROJECT_DIR$/out/artifacts/NiuBank2_0_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -51,9 +43,6 @@
           <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.3.1" />
           <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.5.0" />
         </element>
-      </element>
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/NiuBank-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="NiuBank2.0/web/Web" />
     </root>

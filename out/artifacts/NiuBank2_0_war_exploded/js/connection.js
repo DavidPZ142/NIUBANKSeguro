@@ -8,7 +8,7 @@ var connection = (function (){
 
             console.log(user)
             console.log(password)
-            fetch ("http://localhost:4567/Login?name="+user+"&password="+password)
+            fetch ("http://localhost:8080")
                 .then(response => response.json())
                 .then(function (data){
                     console.log(data)
