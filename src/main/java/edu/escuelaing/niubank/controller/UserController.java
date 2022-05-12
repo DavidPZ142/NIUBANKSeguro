@@ -3,12 +3,8 @@ package edu.escuelaing.niubank.controller;
 import com.google.gson.Gson;
 import edu.escuelaing.niubank.controller.auth.LoginDto;
 import edu.escuelaing.niubank.controller.auth.TokenDto;
-import edu.escuelaing.niubank.data.User;
-import edu.escuelaing.niubank.services.UserServices;
 import edu.escuelaing.niubank.services.UserServicesImpl;
-import jdk.nashorn.internal.parser.Token;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -17,6 +13,7 @@ public class UserController {
     public Gson gson = new Gson();
 
     public UserServicesImpl userServices = new UserServicesImpl();
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,5 +29,15 @@ public class UserController {
     public TokenDto login(LoginDto loginDto){
         return userServices.Login(loginDto);
     }
+
+
+    @GET
+    @Path("/verMonto/{cedula}")
+    public String verMonto(@PathParam("cedula") String cedula){
+        return gson.toJson(userServices.verMonto(cedula));
+    }
+
+
+
 
 }

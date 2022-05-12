@@ -42,6 +42,7 @@
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.5" />
           <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.3.1" />
           <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.5.0" />
+          <element id="library" level="project" name="Maven: org.json:json:20180130" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="NiuBank2.0/web/Web" />
