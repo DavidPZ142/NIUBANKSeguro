@@ -33,7 +33,7 @@ public class UserController {
 
     @GET
     @Path("/verMonto/{cedula}")
-    public String verMonto(@PathParam("cedula") String cedula){
+    public String verMonto(@PathParam("cedula") String cedula) throws Exception {
         return gson.toJson(userServices.verMonto(cedula));
     }
 
@@ -45,7 +45,7 @@ public class UserController {
 
     @GET
     @Path("/solicitar/{cedula}/{monto}")
-    public String solicitarSobregiro(@PathParam("cedula") String cedula, @PathParam("monto") String monto){
+    public String solicitarSobregiro(@PathParam("cedula") String cedula, @PathParam("monto") String monto) throws Exception {
         return gson.toJson(userServices.solicitarSobregiro(cedula, monto));
     }
 

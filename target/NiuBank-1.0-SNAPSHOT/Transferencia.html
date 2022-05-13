@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transferencia</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="js/connection.js"></script>
+</head>
+<body>
+
+<input type="text" id="cedula" placeholder="Introducir cedula destino">
+<input type="text" id="fondos" placeholder="Introducir fondos">
+<div id="fecha"> </div>
+
+<button type="button" id="girar" onclick="connection.transferencia($('#cedula').val(), $('#fondos').val())"> Confirmar Transferencia</button>
+
+</body>
+</html>

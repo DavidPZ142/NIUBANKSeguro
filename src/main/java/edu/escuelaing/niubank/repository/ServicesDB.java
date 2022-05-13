@@ -8,11 +8,11 @@ public interface ServicesDB {
 
     boolean verificarUser(LoginDto loginDto);
 
-    JSONObject verMonto(String cedula);
+    JSONObject verMonto(String cedula) throws Exception;
 
     JSONObject verTransferencias();
 
-    JSONObject solicitarSobregiro(String cedula, String monto);
+    JSONObject solicitarSobregiro(String cedula, String monto) throws Exception;
 
 
 }

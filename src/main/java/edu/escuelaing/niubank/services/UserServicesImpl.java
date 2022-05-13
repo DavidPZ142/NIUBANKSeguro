@@ -4,11 +4,11 @@ import edu.escuelaing.niubank.controller.auth.LoginDto;
 import edu.escuelaing.niubank.controller.auth.TokenDto;
 import edu.escuelaing.niubank.data.User;
 import edu.escuelaing.niubank.repository.ControllerDb;
-<<<<<<< HEAD
+
 import edu.escuelaing.niubank.security.Tokenizer;
-=======
+
 import org.json.JSONObject;
->>>>>>> aca866f8aa96169bb859a0876652b187ab3c7a13
+
 
 
 public class UserServicesImpl implements UserServices{
@@ -30,7 +30,7 @@ public class UserServicesImpl implements UserServices{
     }
 
     @Override
-    public JSONObject verMonto(String cedula) {
+    public JSONObject verMonto(String cedula) throws Exception {
         return  controllerDb.verMonto(cedula);
     }
 
@@ -40,7 +40,7 @@ public class UserServicesImpl implements UserServices{
     }
 
     @Override
-    public JSONObject solicitarSobregiro(String cedula, String monto) {
+    public JSONObject solicitarSobregiro(String cedula, String monto) throws Exception {
         return controllerDb.solicitarSobregiro(cedula,monto);
     }
 

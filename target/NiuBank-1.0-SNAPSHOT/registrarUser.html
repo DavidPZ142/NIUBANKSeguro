@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="js/connection.js"></script>
+</head>
+<body>
+
+<input type="text" id="cedula" placeholder="cedula">
+<input type="text" id="nombre" placeholder="nombre">
+<input type="text" id="apellido" placeholder="apellido">
+<input type="text" id="correo" placeholder="correo">
+<input type="text" id="contrasena" placeholder="contrasena">
+<input type="text" id="fondos" placeholder="fondos">
+
+<button type="button" id="registrar" onclick="connection.registrarUser($('#cedula').val(),$('#nombre').val(),
+    $('#apellido').val(),$('#correo').val(),$('#contrasena').val(),$('#fondos').val(),)"> Registrar</button>
+
+
+
+
+</body>
+</html>

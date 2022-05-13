@@ -2,13 +2,13 @@ package edu.escuelaing.niubank.repository;
 
 import com.google.gson.JsonObject;
 import edu.escuelaing.niubank.controller.auth.LoginDto;
-<<<<<<< HEAD
+
 import edu.escuelaing.niubank.data.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-=======
+
 import org.json.JSONObject;
 
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
->>>>>>> aca866f8aa96169bb859a0876652b187ab3c7a13
+
 
 
 public class ControllerDb implements ServicesDB {
@@ -50,7 +50,11 @@ public class ControllerDb implements ServicesDB {
     }
 
     @Override
-    public JSONObject verMonto(String cedula) {
+    public JSONObject verMonto(String cedula) throws Exception {
+        boolean bool = evitarSql(cedula);
+        if (bool){
+            throw new Exception("No se permiten caracteres especiales en este espacio :v");
+        }
         JSONObject res = new JSONObject();
         String select = "SELECT nombre, fondos FROM usuario where usuario.cedula ='" + cedula + "';";
         try {
@@ -90,7 +94,12 @@ public class ControllerDb implements ServicesDB {
 
 
     @Override
-    public JSONObject solicitarSobregiro(String cedula, String monto) {
+    public JSONObject solicitarSobregiro(String cedula, String monto) throws Exception {
+        boolean bool = evitarSql(cedula);
+        boolean bool1 = evitarSql(monto);
+        if (bool || bool1){
+            throw new Exception("No se permiten caracteres especiales en este espacio ");
+        }
         JSONObject res = new JSONObject();
         UUID uuid = UUID.randomUUID();
         String insert = "INSERT INTO autorizacion values (?,?,?);";
@@ -108,5 +117,21 @@ public class ControllerDb implements ServicesDB {
         return res.put("Sobregiro", false);
 
     }
+
+
+    private boolean evitarSql(String cadena){
+        boolean bool = false;
+        char[] caracter = {';', '(', ')', '!', '"', '?', '$' };
+        for (int i = 0; i< cadena.length(); i++){
+            char ch = cadena.charAt(i);
+            for (int j = 0; j< caracter.length ; j++){
+                if ( caracter[i] == ch){
+                    bool = true;
+                }
+            }
+        }
+        return bool;
+    }
+
 
 }
