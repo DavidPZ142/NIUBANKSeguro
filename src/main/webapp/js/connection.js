@@ -2,29 +2,23 @@
 
 var connection = (function (){
 
+
     return{
 
         conectar : function (user, password){
-
+            let header = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: user,
+                    password: password})
+            }
             console.log(user)
             console.log(password)
-            fetch ("http://localhost:8080")
+            fetch ("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/Login/user", header)
                 .then(response => response.json())
-                .then(function (data){
-                    console.log(data)
-                    localStorage.setItem("cedula", JSON.stringify(data))
+                .then(token => localStorage.setItem("token", JSON.stringify(token)))
 
-                    if(data.rol == "ADMIN"){
-                        location.href = 'lobyAdmin.html'
-                    }else if (data.rol == "USER") {
-                        location.href = 'lobyUser.html'
-                    }else if(data.rol == "AUDITOR"){
-                       location.href = 'lobyAuditor.html'
-                    }else {
-                        alert("usted no se encuentra registrado")
-                    }
 
-                })
         },
 
         registrarUser: function (cedula, nombre, apellido, correo, contrasena, fondos){

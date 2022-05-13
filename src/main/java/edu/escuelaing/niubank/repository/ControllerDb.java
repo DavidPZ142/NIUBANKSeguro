@@ -1,8 +1,11 @@
 package edu.escuelaing.niubank.repository;
 
 import edu.escuelaing.niubank.controller.auth.LoginDto;
+import edu.escuelaing.niubank.data.User;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class ControllerDb implements ServicesDB{
@@ -19,7 +22,19 @@ public class ControllerDb implements ServicesDB{
 
     @Override
     public boolean verificarUser(LoginDto loginDto) {
-        System.out.println("si estoy funcionando!!!!");
+
+        String select = "select * from usuario where usuario.cedula = '1' and usuario.contrasena = 'ADMIN'";
+        try {
+            ResultSet resultSet = connection.prepareStatement(select).executeQuery();
+            if(resultSet.next()){
+                //User user = new User(resultSet.getString("cedula"), resultSet.getString("apellido"), resultSet.getString("nombre"), resultSet.getString("correo"),
+                        //resultSet.getString("password"), resultSet.getString("rol"));
+                connection.close();
+                return true;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return false;
     }
 }
