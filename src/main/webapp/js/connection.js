@@ -46,39 +46,38 @@ var connection = (function (){
 
         loadMonto : function(){
             let info = JSON.parse(localStorage.getItem("cedula"));
-            fetch("http://localhost:4567/VerFondos?cedula="+info.cedula)
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/verMonto/"+info.cedula)
             .then(response => response.json())
             .then(function(data){
-                console.log(data)
-                $('#nombre').html(data.nombre)
-                $('#monto').html(data.fondos)
+                console.log(data.map.nombre)
+                $('#nombre').html(data.map.nombre)
+                $('#monto').html(data.map.fondos)
 
             })
 
         },
 
         verTransferencia : function(){
-            fetch("http://localhost:4567/verTransferencia?transacciones=users")
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/verTransferencia")
                 .then(response => response.json())
                 .then(function(data){
+                    console.log(data.map)
                     let html = "<tr>";
                     let monto = 0;
                     let numero = 0;
-                    for ( const property in data){
-                        console.log(data[property])
-                        monto += data[property].cantidad
+                    let datos = data.map
+                    for ( const property in datos){
+                        console.log(datos[property])
+                        monto += datos[property].map.cantidad
                         numero +=1
-                        html += "<td>" + data[property].cedulaemisor + "</td>"
-                        html += "<td>" + data[property].cedulareceptor + "</td>"
-                        html += "<td>" + data[property].cantidad + "</td>"
+                        html += "<td>" + datos[property].map.cedulaemisor + "</td>"
+                        html += "<td>" + datos[property].map.cedulareceptor + "</td>"
+                        html += "<td>" + datos[property].map.cantidad + "</td>"
                         html += "</tr>"
                         $('#bodyTable').html(html)
                     }
                     $('#monto').html(monto)
                     $('#total').html(numero)
-
-
-
                 })
         },
 
