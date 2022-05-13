@@ -43,6 +43,12 @@ public class UserController {
         return gson.toJson(userServices.verTransferencias());
     }
 
+    @GET
+    @Path("/solicitar/{cedula}/{monto}")
+    public String solicitarSobregiro(@PathParam("cedula") String cedula, @PathParam("monto") String monto){
+        return gson.toJson(userServices.solicitarSobregiro(cedula, monto));
+    }
+
 
 
 

@@ -11,5 +11,7 @@ public interface ServicesDB {
 
     JSONObject verTransferencias();
 
+    JSONObject solicitarSobregiro(String cedula, String monto);
+
 
 }

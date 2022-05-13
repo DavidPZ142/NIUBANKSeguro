@@ -31,5 +31,10 @@ public class UserServicesImpl implements UserServices{
         return controllerDb.verTransferencias();
     }
 
+    @Override
+    public JSONObject solicitarSobregiro(String cedula, String monto) {
+        return controllerDb.solicitarSobregiro(cedula,monto);
+    }
+
 
 }

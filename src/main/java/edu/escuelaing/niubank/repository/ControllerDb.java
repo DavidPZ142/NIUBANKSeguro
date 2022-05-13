@@ -5,8 +5,10 @@ import edu.escuelaing.niubank.controller.auth.LoginDto;
 import org.json.JSONObject;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 
 public class ControllerDb implements ServicesDB {
@@ -65,4 +67,26 @@ public class ControllerDb implements ServicesDB {
 
         return res;
     }
+
+
+    @Override
+    public JSONObject solicitarSobregiro(String cedula, String monto) {
+        JSONObject res = new JSONObject();
+        UUID uuid = UUID.randomUUID();
+        String insert = "INSERT INTO autorizacion values (?,?,?);";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(insert);
+            stmt.setString(1, uuid.toString());
+            stmt.setString(2, cedula);
+            stmt.setInt(3, Integer.parseInt(monto));
+            System.out.println(stmt.executeUpdate());
+            return res.put("Sobregiro", true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res.put("Sobregiro", false);
+
+    }
+
 }
