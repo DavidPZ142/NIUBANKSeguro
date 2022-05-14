@@ -84,6 +84,11 @@
             <artifactId>jose4j</artifactId>
             <version>0.6.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
 
     </dependencies>
 

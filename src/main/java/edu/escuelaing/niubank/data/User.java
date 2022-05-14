@@ -11,6 +11,10 @@ public class User {
     private String rol;
     private boolean registrado;
 
+    public User(){
+
+    }
+
     public User(String identificador, String apellido, String nombre, String correo, String password, String rol) {
         this.identificador = identificador;
         this.apellido = apellido;

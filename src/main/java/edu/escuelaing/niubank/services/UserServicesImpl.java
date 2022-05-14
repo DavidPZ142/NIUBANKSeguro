@@ -5,6 +5,9 @@ import edu.escuelaing.niubank.controller.auth.TokenDto;
 import edu.escuelaing.niubank.data.User;
 import edu.escuelaing.niubank.repository.ControllerDb;
 import edu.escuelaing.niubank.security.Tokenizer;
+import org.json.JSONObject;
+
+import java.util.Objects;
 
 
 public class UserServicesImpl implements UserServices{
@@ -23,4 +26,52 @@ public class UserServicesImpl implements UserServices{
         }
         return null;
     }
+
+    @Override
+    public JSONObject verMonto(String cedula) {
+        return  controllerDb.verMonto(cedula);
+    }
+
+    @Override
+    public JSONObject verTransferencias() {
+        return controllerDb.verTransferencias();
+    }
+
+    @Override
+    public JSONObject solicitarSobregiro(String cedula, String monto) {
+        return controllerDb.solicitarSobregiro(cedula,monto);
+    }
+
+    @Override
+    public User loadInfoUser(String token) {
+        Tokenizer tokenizer = new Tokenizer();
+        String key = tokenizer.getInfoToken(token);
+        return controllerDb.findUser(key);
+    }
+
+    @Override
+    public boolean registrarUser(String token, String cedula) {
+        Tokenizer tokenizer = new Tokenizer();
+        String key = tokenizer.getInfoToken(token);
+        if(controllerDb.buscarUser(key) && !Objects.equals(cedula, "")){
+            try {
+                controllerDb.registrarUser(cedula);
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                return false;
+            }
+        }else return false;
+    }
+
+    @Override
+    public boolean crearUser(String cedula, User user) {
+        try {
+            controllerDb.crearUser(cedula, user);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 }

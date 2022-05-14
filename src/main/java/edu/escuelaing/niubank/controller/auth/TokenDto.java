@@ -7,6 +7,14 @@ public class TokenDto {
     private String token;
     private Date expirationDate;
 
+    public TokenDto(){
+
+    }
+    public TokenDto(String token) {
+        this.token = token;
+        this.expirationDate = expirationDate;
+    }
+
     public TokenDto(String token, Date expirationDate) {
         this.token = token;
         this.expirationDate = expirationDate;

@@ -8,18 +8,7 @@
 </head>
 <body>
 
-<input type="text" id="cedula" placeholder="cedula">
-<input type="text" id="nombre" placeholder="nombre">
-<input type="text" id="apellido" placeholder="apellido">
-<input type="text" id="correo" placeholder="correo">
-<input type="text" id="contrasena" placeholder="contrasena">
-<input type="text" id="fondos" placeholder="fondos">
-
-<button type="button" id="registrar" onclick="connection.registrarUser($('#cedula').val(),$('#nombre').val(),
-    $('#apellido').val(),$('#correo').val(),$('#contrasena').val(),$('#fondos').val(),)"> Registrar</button>
-
-
-
-
+    <input type="text" id="cedula" placeholder="cedula">
+    <button type="button" id="registrar" onclick="connection.registrarUser($('#cedula').val())"> Registrar</button>
 </body>
 </html>

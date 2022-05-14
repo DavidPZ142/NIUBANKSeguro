@@ -1,14 +1,11 @@
 package edu.escuelaing.niubank.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edu.escuelaing.niubank.controller.auth.LoginDto;
 import edu.escuelaing.niubank.controller.auth.TokenDto;
 import edu.escuelaing.niubank.data.User;
-import edu.escuelaing.niubank.services.UserServices;
 import edu.escuelaing.niubank.services.UserServicesImpl;
-import jdk.nashorn.internal.parser.Token;
-
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -32,5 +29,56 @@ public class UserController {
     public TokenDto login(LoginDto loginDto){
         return userServices.Login(loginDto);
     }
+
+    @GET
+    @Path("/infoUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User infoUser(@HeaderParam("authorization") String token){
+        return userServices.loadInfoUser(token);
+    }
+
+    @GET
+    @Path("/verMonto/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String verMonto(@PathParam("cedula") String cedula){
+        return gson.toJson(userServices.verMonto(cedula));
+    }
+
+    @GET
+    @Path("/verTransferencia")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String verTransferencia(){
+        return gson.toJson(userServices.verTransferencias());
+    }
+
+    @GET
+    @Path("/solicitar/{cedula}/{monto}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String solicitarSobregiro(@PathParam("cedula") String cedula, @PathParam("monto") String monto){
+        return gson.toJson(userServices.solicitarSobregiro(cedula, monto));
+    }
+
+    @GET
+    @Path("/registrar/User/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String registrarUser(@HeaderParam("authorization") String token, @PathParam("cedula") String cedula){
+        System.out.println(cedula);
+        return gson.toJson(userServices.registrarUser(token, cedula));
+    }
+
+    @PUT
+    @Path("/crear/User/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String crearUser(@PathParam("cedula") String cedula, User user){
+        System.out.println(user.getIdentificador());
+        return gson.toJson(userServices.crearUser(cedula, user));
+    }
+
 
 }

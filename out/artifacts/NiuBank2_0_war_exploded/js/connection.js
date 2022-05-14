@@ -16,12 +16,37 @@ var connection = (function (){
             console.log(password)
             fetch ("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/Login/user", header)
                 .then(response => response.json())
-                .then(json => console.log(json))
+                .then(function (token){
+                    localStorage.setItem("token", JSON.stringify(token))
+                    console.log("pedir informacion")
+                    let tokenizer = JSON.parse(localStorage.getItem('token'))
+                    const requestOptions = {
+                        method: 'GET',
+                        headers: {'Authorization': tokenizer.token }
+                    }
+                    console.log(localStorage.getItem('token'))
+                    fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/infoUser", requestOptions)
+                        .then(response => response.json())
+                        .then(function (infoUser){
+                            localStorage.setItem("infoUser", JSON.stringify(infoUser))
+                            if(infoUser.rol === "ADMIN"){
+                                location.href = 'lobyAdmin.html'
+                            }else if(infoUser.rol === "AUDITOR"){
+                                location.href = 'lobyAuditor.html'
+                            }else if(infoUser.rol === "USER"){
+                                location.href = 'lobyUser.html'
+                            }
+                        })
+                })
         },
 
-        registrarUser: function (cedula, nombre, apellido, correo, contrasena, fondos){
+        registrarUser: function (cedula){
             console.log('entre')
-            fetch( "http://localhost:4567/Registrar?name="+cedula+"&nombre="+nombre+"&apellido="+apellido+"&correo="+correo+"&password="+contrasena+"&fondos="+fondos)
+            let tokenizer = JSON.parse(localStorage.getItem('token'))
+            let header = {method: 'GET',
+                headers: { 'Authorization': tokenizer.token }
+            }
+            fetch( "http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/registrar/User/"+cedula, header)
                 .then(response => response.json())
                 .then( function (data){
                     if(data){
@@ -106,18 +131,27 @@ var connection = (function (){
 
         },
 
-        crearUser : function (cedula, contrasena){
-
-            fetch("http://localhost:4567/createUser?cedula="+cedula+"&cotrasena="+contrasena)
+        crearUser : function (cedula, nombre, apellido, correo, password){
+            let header = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cedula:cedula,
+                    nombre:nombre,
+                    apellido:apellido,
+                    correo:correo,
+                    contrasena:password,
+                    fondos:0,
+                    rol:"USER"
+                })
+            }
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/crear/User",header)
                 .then(response => response.json())
                 .then( function (data){
-                    if(data.creado){
+                    if(data){
                         alert("cuenta creado con exito")
                         location.href = 'login.html'
-                    }else if(data.creado == 'cread'){
-                        alert("usted ya posee una cuenta")
-                    }
-                    else {
+                    }else {
                         alert("usted no esta registrado")
                     }
                 })

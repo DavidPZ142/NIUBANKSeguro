@@ -10,9 +10,13 @@
 <body>
 
     <input type="text" id="cedula" placeholder="cedula">
+    <input type="text" id="nombre" placeholder="nombre">
+    <input type="text" id="apellido" placeholder="apellido">
+    <input type="text" id="correo" placeholder="correo">
     <input type="text" id="contrasena" placeholder="contrasena">
 
-    <button type="button" id="longin" onclick=" connection.crearUser($('#cedula').val(), $('#contrasena').val())"> Long In</button>
+    <button type="button" id="registrar" onclick="connection.crearUser($('#cedula').val(),$('#nombre').val(),
+    $('#apellido').val(),$('#correo').val(),$('#contrasena').val())"> Registrar</button>
 
 </body>
 </html>
