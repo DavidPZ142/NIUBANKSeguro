@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/NiuBank.iml" filepath="$PROJECT_DIR$/NiuBank.iml" />
       <module fileurl="file://$PROJECT_DIR$/NiuBank2.0.iml" filepath="$PROJECT_DIR$/NiuBank2.0.iml" />
     </modules>
   </component>

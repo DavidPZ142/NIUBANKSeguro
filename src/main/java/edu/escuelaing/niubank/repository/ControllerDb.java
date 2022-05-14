@@ -1,6 +1,8 @@
 package edu.escuelaing.niubank.repository;
 
+import com.google.gson.JsonObject;
 import edu.escuelaing.niubank.controller.auth.LoginDto;
+
 import edu.escuelaing.niubank.data.User;
 import edu.escuelaing.niubank.security.Tokenizer;
 import org.json.JSONObject;
@@ -11,8 +13,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+import org.json.JSONObject;
 
-public class ControllerDb implements ServicesDB{
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
+
+
+
+public class ControllerDb implements ServicesDB {
 
     ConnectionDb connectionDb;
     Connection connection;
@@ -44,6 +55,7 @@ public class ControllerDb implements ServicesDB{
     }
 
     @Override
+
     public User findUser(String identificador) {
         String select = "SELECT * FROM usuario where usuario.cedula = '"+identificador+"';";
         try {
@@ -108,8 +120,12 @@ public class ControllerDb implements ServicesDB{
     }
 
 
-    @Override
-    public JSONObject verMonto(String cedula) {
+    public JSONObject verMonto(String cedula) throws Exception {
+        boolean bool = evitarSql(cedula);
+        if (bool){
+            throw new Exception("No se permiten caracteres especiales en este espacio :v");
+        }
+
         JSONObject res = new JSONObject();
         String select = "SELECT nombre, fondos FROM usuario where usuario.cedula ='" + cedula + "';";
         try {
@@ -149,7 +165,13 @@ public class ControllerDb implements ServicesDB{
 
 
     @Override
-    public JSONObject solicitarSobregiro(String cedula, String monto) {
+    public JSONObject solicitarSobregiro(String cedula, String monto) throws Exception {
+        boolean bool = evitarSql(cedula);
+        boolean bool1 = evitarSql(monto);
+        if (bool || bool1){
+            throw new Exception("No se permiten caracteres especiales en este espacio ");
+        }
+
         JSONObject res = new JSONObject();
         UUID uuid = UUID.randomUUID();
         String insert = "INSERT INTO autorizacion values (?,?,?);";
@@ -168,4 +190,17 @@ public class ControllerDb implements ServicesDB{
 
     }
 
+    private boolean evitarSql(String cadena){
+        boolean bool = false;
+        char[] caracter = {';', '(', ')', '!', '"', '?', '$' };
+        for (int i = 0; i< cadena.length(); i++){
+            char ch = cadena.charAt(i);
+            for (int j = 0; j< caracter.length ; j++){
+                if ( caracter[i] == ch){
+                    bool = true;
+                }
+            }
+        }
+        return bool;
+    }
 }
