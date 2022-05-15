@@ -57,7 +57,7 @@ var connection = (function (){
 
         transferencia: function (cedulaDestino, monto){
             let info = JSON.parse(localStorage.getItem("cedula"))
-            fetch("http://localhost:4567/Transferencia?ccOrigen="+info.cedula+"&ccDestino="+cedulaDestino+"&monto="+monto)
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/transferencia/"+info.cedula+"/"+cedulaDestino+"/"+monto)
                 .then(response => response.json())
                 .then( function (data){
                     console.log(data.transferencia)
@@ -114,9 +114,14 @@ var connection = (function (){
         },
 
         modificarMonto :  function (cedula, cantidad){
+            let tokenizer = JSON.parse(localStorage.getItem('token'))
+            let header = {
+                method: 'GET',
+                headers: { 'Authorization': tokenizer.token }
+            }
             console.log(cedula)
             console.log(cantidad)
-            fetch("http://localhost:4567/modificarMonto?cedula="+cedula+"&cantidad="+cantidad)
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/modificarMonto/cedula/cantidad", header)
                 .then(response => response.json())
                 .then(function (data){
 
@@ -128,7 +133,7 @@ var connection = (function (){
 
 
         solicitarSobregiro: function (cedula, monto){
-            fetch("http://localhost:4567/solicitarSobregiro?cedula="+cedula+"&monto="+monto)
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/solicitar/"+cedula+"/"+monto)
                 .then(response => response.json())
                 .then(function (data){
                     if(data){
@@ -165,7 +170,7 @@ var connection = (function (){
         },
 
         mostrarAutorizaciones: function (){
-            fetch("http://localhost:4567/mostrarAutorizaciones?autorizaciones=auto")
+            fetch("\"http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/autorizaciones")
                 .then(response => response.json())
                 .then(function (data){
                     let html = "<tr>";

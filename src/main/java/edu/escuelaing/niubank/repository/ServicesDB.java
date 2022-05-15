@@ -14,10 +14,10 @@ public interface ServicesDB {
     boolean buscarUser(String cedula);
     void crearUser(String cedula, User user);
     String verMonto(String cedula) throws Exception;
-
     JSONObject verTransferencias();
-
     JSONObject solicitarSobregiro(String cedula, String monto) throws Exception;
-
+    JSONObject modificarMonto(String cedula, String Cantidad) throws Exception;
+    JSONObject transferencia(String ccOrigen, String ccDestino, String monto) throws Exception;
+    JSONObject mostrarAutorizaciones() throws  Exception;
 
 }

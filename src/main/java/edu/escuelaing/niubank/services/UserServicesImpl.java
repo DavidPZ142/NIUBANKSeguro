@@ -47,6 +47,8 @@ public class UserServicesImpl implements UserServices{
         return controllerDb.solicitarSobregiro(cedula,monto);
     }
 
+
+
     @Override
     public User loadInfoUser(String token) {
         Tokenizer tokenizer = new Tokenizer();
@@ -79,4 +81,23 @@ public class UserServicesImpl implements UserServices{
         }
     }
 
+
+    @Override
+    public JSONObject modificarMonto(String cedula, String monto, String token) throws Exception {
+        Tokenizer tokenizer = new Tokenizer();
+        if(controllerDb.findUser(tokenizer.getInfoToken(token)).getRol() == "ADMIN"){
+            return controllerDb.modificarMonto(cedula,monto);
+        }
+        return null;
+    }
+
+    @Override
+    public JSONObject transferencia(String ccOrigen, String ccDestino, String monto) throws Exception {
+        return controllerDb.transferencia(ccOrigen , ccDestino, monto);
+    }
+
+    @Override
+    public JSONObject mostrarAutorizaciones() throws Exception {
+        return controllerDb.mostrarAutorizaciones();
+    }
 }

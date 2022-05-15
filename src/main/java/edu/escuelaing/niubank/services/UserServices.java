@@ -18,5 +18,7 @@ public interface UserServices {
     String verMonto (String cedula) throws Exception;
     JSONObject verTransferencias(String token);
     JSONObject solicitarSobregiro(String cedula, String monto) throws Exception;
-
+    JSONObject modificarMonto(String cedula, String monto, String token) throws Exception;
+    JSONObject transferencia(String ccOrigen, String ccDestino, String monto) throws Exception;
+    JSONObject mostrarAutorizaciones() throws Exception;
 }

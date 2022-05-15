@@ -182,6 +182,89 @@ public class ControllerDb implements ServicesDB {
 
     }
 
+    public JSONObject modificarMonto(String cedula, String cantidad) throws Exception {
+        boolean bool = evitarSql(cedula);
+        boolean bool1 = evitarSql(cantidad);
+        if (bool || bool1){
+            throw new Exception("No se permiten caracteres especiales en este espacio ");
+        }
+
+        JSONObject res = new JSONObject();
+        String update = "UPDATE usuario SET fondos = ? where cedula = ? ;";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(update);
+            stmt.setInt(1, Integer.parseInt(cantidad));
+            stmt.setString(2, cedula);
+            stmt.executeUpdate();
+            return res.put("modificacion", true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return res.put("modificacion", false);
+    }
+
+    @Override
+    public JSONObject transferencia(String ccOrigen, String ccDestino, String monto) throws Exception {
+        if(0 > Integer.parseInt(monto)){
+            throw new Exception("No puede transferir numeros negativos");
+        }
+        UUID uuid = UUID.randomUUID();
+        JSONObject res = new JSONObject();
+        String ccOrigenSelect = "UPDATE usuario SET fondos = fondos + ? where cedula = ?";
+        String ccDestinoSelect = "UPDATE usuario SET fondos = fondos - ? where cedula = ?";
+        String transaccion = "INSERT INTO transaccion values (?,?,?,?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(ccOrigenSelect);
+            stmt.setInt(1, Integer.parseInt(monto));
+            stmt.setString(2, ccDestino);
+            PreparedStatement stmt2 = connection.prepareStatement(ccDestinoSelect);
+            stmt2.setInt(1, Integer.parseInt(monto));
+            stmt2.setString(2, ccOrigen);
+            PreparedStatement stmt3 = connection.prepareStatement(transaccion);
+            stmt3.setString(1, uuid.toString());
+            stmt3.setString(2, ccOrigen);
+            stmt3.setString(3, ccDestino);
+            stmt3.setInt(4, Integer.parseInt(monto));
+            System.out.println(stmt.executeUpdate());
+            System.out.println(stmt2.executeUpdate());
+            System.out.println(stmt3.executeUpdate());
+
+            return res.put("transferencia", true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return res.put("transferencia", false);
+
+    }
+
+    @Override
+    public JSONObject mostrarAutorizaciones() throws Exception {
+        JSONObject res = new JSONObject();
+        int key = 0;
+        String select = "SELECT * FROM autorizacion;";
+        try {
+            ResultSet resultSet = connection.prepareStatement(select).executeQuery();
+            while (resultSet.next()){
+                JSONObject res2 = new JSONObject();
+                key += 1;
+                res2.put("id",resultSet.getString("id"));
+                res2.put("cedula",resultSet.getString("cedula"));
+                res2.put("monto",resultSet.getInt("monto"));
+                res.put(String.valueOf(key), res2);
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     private boolean evitarSql(String cadena){
         boolean bool = false;
         char[] caracter = {';', '(', ')', '!', '"', '?', '$' };

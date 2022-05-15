@@ -24,7 +24,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String hello() {
-        return gson.toJson("Hello perez puto!!!");
+        return gson.toJson("Hola");
     }
 
     @POST
@@ -86,5 +86,30 @@ public class UserController {
         System.out.println(user.getIdentificador());
         return gson.toJson(userServices.crearUser(cedula, user));
     }
+
+    @GET
+    @Path("/modificarMonto/{cedula}/{monto}")
+    public String modificarMonto(@HeaderParam("authorization")String token,
+                                 @PathParam("cedula") String cedula,
+                                 @PathParam("monto") String monto) throws Exception {
+        return gson.toJson(userServices.modificarMonto(cedula,monto,token));
+
+    }
+
+    @GET
+    @Path("/transferencia/{ccOrigen}/{ccDestino}/{monto}")
+    public String transferencia(@PathParam("ccOrigen")String ccOrigen,
+                                @PathParam("ccDestino")String ccDestino,
+                                @PathParam("monto")String monto) throws Exception {
+
+        return gson.toJson(userServices.transferencia(ccOrigen,ccDestino,monto));
+    }
+
+    @GET
+    @Path("/autorizaciones")
+    public String mostrarAutorizaciones() throws Exception {
+        return gson.toJson(userServices.mostrarAutorizaciones());
+    }
+
 
 }
