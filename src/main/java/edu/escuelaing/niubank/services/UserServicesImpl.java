@@ -34,8 +34,12 @@ public class UserServicesImpl implements UserServices{
     }
 
     @Override
-    public JSONObject verTransferencias() {
-        return controllerDb.verTransferencias();
+    public JSONObject verTransferencias(String token) {
+        Tokenizer tokenizer = new Tokenizer();
+        if(controllerDb.findUser(tokenizer.getInfoToken(token)).getRol() == "AUDITOR"){
+            return controllerDb.verTransferencias();
+        }
+        return null;
     }
 
     @Override

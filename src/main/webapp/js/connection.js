@@ -85,7 +85,12 @@ var connection = (function (){
         },
 
         verTransferencia : function(){
-            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/verTransferencia")
+            let tokenizer = JSON.parse(localStorage.getItem('token'))
+            let header = {
+                method: 'GET',
+                headers: { 'Authorization': tokenizer.token }
+            }
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/verTransferencia", header)
                 .then(response => response.json())
                 .then(function(data){
                     console.log(data.map)
@@ -139,12 +144,11 @@ var connection = (function (){
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    cedula:cedula,
+                    identificador:cedula,
                     nombre:nombre,
                     apellido:apellido,
                     correo:correo,
-                    contrasena:password,
-                    fondos:0,
+                    password:password,
                     rol:"USER"
                 })
             }

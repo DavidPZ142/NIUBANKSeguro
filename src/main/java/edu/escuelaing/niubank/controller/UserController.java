@@ -57,8 +57,8 @@ public class UserController {
     @Path("/verTransferencia")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String verTransferencia() {
-        return gson.toJson(userServices.verTransferencias());
+    public String verTransferencia(@HeaderParam("authorization") String token) {
+        return gson.toJson(userServices.verTransferencias(token));
     }
 
     @GET

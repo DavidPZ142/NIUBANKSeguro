@@ -16,7 +16,7 @@ public interface UserServices {
     boolean registrarUser(String token, String cedula);
     boolean crearUser(String cedula, User user);
     String verMonto (String cedula) throws Exception;
-    JSONObject verTransferencias();
+    JSONObject verTransferencias(String token);
     JSONObject solicitarSobregiro(String cedula, String monto) throws Exception;
 
 }
