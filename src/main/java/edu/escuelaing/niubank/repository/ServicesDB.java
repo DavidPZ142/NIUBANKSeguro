@@ -13,7 +13,7 @@ public interface ServicesDB {
     void registrarUser(String cedula);
     boolean buscarUser(String cedula);
     void crearUser(String cedula, User user);
-    JSONObject verMonto(String cedula) throws Exception;
+    String verMonto(String cedula) throws Exception;
 
     JSONObject verTransferencias();
 

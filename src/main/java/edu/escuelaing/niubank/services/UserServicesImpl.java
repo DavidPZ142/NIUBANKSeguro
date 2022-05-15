@@ -4,14 +4,9 @@ import edu.escuelaing.niubank.controller.auth.LoginDto;
 import edu.escuelaing.niubank.controller.auth.TokenDto;
 import edu.escuelaing.niubank.data.User;
 import edu.escuelaing.niubank.repository.ControllerDb;
-
 import edu.escuelaing.niubank.security.Tokenizer;
 import org.json.JSONObject;
-
 import java.util.Objects;
-
-import org.json.JSONObject;
-
 
 
 public class UserServicesImpl implements UserServices{
@@ -32,8 +27,10 @@ public class UserServicesImpl implements UserServices{
         return null;
     }
 
-    public JSONObject verMonto(String cedula) throws Exception {
-        return  controllerDb.verMonto(cedula);
+    public String verMonto(String token) throws Exception {
+        Tokenizer tokenizer = new Tokenizer();
+        System.out.println(token);
+        return  controllerDb.verMonto(tokenizer.getInfoToken(token));
     }
 
     @Override

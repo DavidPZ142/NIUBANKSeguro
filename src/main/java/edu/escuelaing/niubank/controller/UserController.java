@@ -46,9 +46,11 @@ public class UserController {
 
 
     @GET
-    @Path("/verMonto/{cedula}")
-    public String verMonto(@PathParam("cedula") String cedula) throws Exception {
-        return gson.toJson(userServices.verMonto(cedula));
+    @Path("/verMonto/user")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String verMonto(@HeaderParam("authorization") String token) throws Exception {
+        return gson.toJson(userServices.verMonto(token));
     }
 
     @GET

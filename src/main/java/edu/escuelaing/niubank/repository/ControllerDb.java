@@ -13,15 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import org.json.JSONObject;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.UUID;
-
-
 
 public class ControllerDb implements ServicesDB {
 
@@ -106,6 +97,7 @@ public class ControllerDb implements ServicesDB {
         String update = "update usuario set nombre = ?, apellido = ?, correo = ?, contrasena = ?, rol = 'USER' where cedula = ?";
 
         try {
+
             PreparedStatement stmt = connection.prepareStatement(update);
             stmt.setString(1, user.getNombre());
             stmt.setString(2, user.getApellido());
@@ -120,24 +112,24 @@ public class ControllerDb implements ServicesDB {
     }
 
 
-    public JSONObject verMonto(String cedula) throws Exception {
+    public String verMonto(String cedula) throws Exception {
+        System.out.println("sdasdsadasdasd");
         boolean bool = evitarSql(cedula);
         if (bool){
             throw new Exception("No se permiten caracteres especiales en este espacio :v");
         }
-
-        JSONObject res = new JSONObject();
-        String select = "SELECT nombre, fondos FROM usuario where usuario.cedula ='" + cedula + "';";
+        String select = "SELECT fondos FROM usuario where usuario.cedula ='" + cedula + "';";
         try {
             ResultSet resultSet = connection.prepareStatement(select).executeQuery();
-            resultSet.next();
-            res.put("nombre", resultSet.getString("nombre"));
-            res.put("fondos", resultSet.getString("fondos"));
+            if(resultSet.next()){
+                System.out.println(String.valueOf(resultSet.getInt("fondos"))+ "sdasdsadasdasd");
+                return "0";
+            }return "0";
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return "0";
         }
-        return res;
     }
 
     @Override

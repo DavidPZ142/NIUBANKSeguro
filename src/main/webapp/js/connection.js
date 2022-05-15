@@ -68,13 +68,17 @@ var connection = (function (){
         },
 
         loadMonto : function(){
-            let info = JSON.parse(localStorage.getItem("cedula"));
-            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/verMonto/"+info.cedula)
+            let tokenizer = JSON.parse(localStorage.getItem('token'))
+            let infoUser = JSON.parse(localStorage.getItem('infoUser'))
+            let head = {
+                method: 'GET',
+                headers: { 'Authorization': tokenizer.token }
+            }
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/verMonto/user", head)
             .then(response => response.json())
             .then(function(data){
-                console.log(data.map.nombre)
-                $('#nombre').html(data.map.nombre)
-                $('#monto').html(data.map.fondos)
+                $('#nombre').html(infoUser.nombre)
+                $('#monto').html(data)
 
             })
 
@@ -144,7 +148,7 @@ var connection = (function (){
                     rol:"USER"
                 })
             }
-            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/crear/User",header)
+            fetch("http://localhost:8080/NiuBank2_0_war_exploded/api/v2/Banco/crear/User/"+cedula,header)
                 .then(response => response.json())
                 .then( function (data){
                     if(data){
